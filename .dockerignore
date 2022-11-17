@@ -1,0 +1,21 @@
+# flyctl launch added from .gitignore
+**\node_modules
+**\.env
+**\coverage
+**\coverage.json
+**\typechain
+**\typechain-types
+
+# flyctl launch added from contracts\.gitignore
+contracts\**\node_modules
+contracts\**\.env
+contracts\**\coverage
+contracts\**\coverage.json
+contracts\**\typechain
+contracts\**\typechain-types
+
+#Hardhat files
+contracts\**\cache
+contracts\**\artifacts
+contracts\**\hardhat.config.js
+

@@ -6,9 +6,11 @@ require('dotenv').config();
 const { NFTStorage, File, Blob } = require('nft.storage')
 const ethers = require('ethers');
 
-const log = console.log;
 
-const wss = new WebSocket.Server({ port: 8080 });
+const log = console.log;
+const port = process.env.PORT || 8080;
+
+const wss = new WebSocket.Server({ port: port });
 const NFTSTORAGE_API_KEY = process.env.NFTSTORAGE_API_KEY;
 
 const nftClient = new NFTStorage({ token: NFTSTORAGE_API_KEY });
@@ -164,6 +166,7 @@ wss.on('connection', function connection(ws) {
 
     } catch (error) {
       log(chalk.red("[ERROR] Claim procedure failed."));
+      log(chalk.red(error.message));
       ws.send(JSON.stringify({
         status: 'error'
       }));

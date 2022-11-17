@@ -14,6 +14,7 @@
     "chalk": "^4.1.2",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
+    "express": "^4.18.2",
     "hardhat": "^2.12.2",
     "keccak256": "^1.0.6",
     "nft.storage": "^7.0.0",
