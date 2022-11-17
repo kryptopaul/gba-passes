@@ -173,10 +173,10 @@ wss.on('connection', function connection(ws) {
         "embeds": [
           {
             "title": "New mint!",
-            "description": `Someone just claimed a pass!\n\nTransaction link: https://mumbai.polygonscan.com/tx/TRANSACTION_ID`,
+            "description": `Someone just claimed a pass!\n\nTransaction link: https://mumbai.polygonscan.com/tx/${transaction.hash}`,
             "color": 894228,
             "thumbnail": {
-              "url": `https://cloudflare-ipfs.com/ipfs/HASH_HERE`
+              "url": `https://cloudflare-ipfs.com/ipfs/${nftImageHashes[preparedDataJSON.design]}`
             }
           }
         ],
@@ -185,9 +185,16 @@ wss.on('connection', function connection(ws) {
 
       const webhookURL = process.env.DISCORD_WEBHOOK_URL; // test with a pasted URL from the Discord channel, but once you're done, replace it with process.env.DISCORD_WEBHOOK_URL
 
-      // your code here
-      
+      // Sending notification to Discord channel
+      log(chalk.yellow.bold('Sending notification to Discord...'));
 
+      axios.post(webhookURL, JSON.stringify(payload))
+      .then((response) => {
+        log(chalk.green("SUCCESS: sent notification to Discord"));
+      })
+      .catch((error) => {
+        log(chalk.red("[ERROR] Failed to send notification to Discord"));
+      })
 
     } catch (error) {
       log(chalk.red("[ERROR] Claim procedure failed."));
