@@ -188,12 +188,18 @@ wss.on('connection', function connection(ws) {
       // Sending notification to Discord channel
       log(chalk.yellow.bold('Sending notification to Discord...'));
 
-      axios.post(webhookURL, JSON.stringify(payload))
+      // add header content-type: application/json
+
+      axios.post(webhookURL, JSON.stringify(payload), {
+        headers: {
+          'Content-Type': 'application/json'
+        }})
       .then((response) => {
         log(chalk.green("SUCCESS: sent notification to Discord"));
       })
       .catch((error) => {
         log(chalk.red("[ERROR] Failed to send notification to Discord"));
+        log(chalk.red(error));
       })
 
     } catch (error) {
