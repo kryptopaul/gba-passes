@@ -164,6 +164,31 @@ wss.on('connection', function connection(ws) {
         txHash: transaction.hash,
       }));
 
+      // Payload for Discord Webhook
+      // TRANSACTION_ID can be accessed with transaction.hash (use ${})
+      // HASH_HERE - check which design was selected (preparedDataJSON.design) and use the corresponding hash from nftImageHashes (in line 18)
+
+      const payload = {
+        "content": null,
+        "embeds": [
+          {
+            "title": "New mint!",
+            "description": `Someone just claimed a pass!\n\nTransaction link: https://mumbai.polygonscan.com/tx/TRANSACTION_ID`,
+            "color": 894228,
+            "thumbnail": {
+              "url": `https://cloudflare-ipfs.com/ipfs/HASH_HERE`
+            }
+          }
+        ],
+        "attachments": []
+      }
+
+      const webhookURL = process.env.DISCORD_WEBHOOK_URL; // test with a pasted URL from the Discord channel, but once you're done, replace it with process.env.DISCORD_WEBHOOK_URL
+
+      // your code here
+      
+
+
     } catch (error) {
       log(chalk.red("[ERROR] Claim procedure failed."));
       log(chalk.red(error.message));
