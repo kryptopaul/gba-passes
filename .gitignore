@@ -4,3 +4,4 @@ coverage
 coverage.json
 typechain
 typechain-types
+Dockerfile
