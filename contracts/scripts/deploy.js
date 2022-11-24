@@ -8,9 +8,9 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const GBADebug = await hre.ethers.getContractFactory("GBADebug");
-  const gbaDebug = await GBADebug.deploy();
-  console.log("GBADebug deployed to:", gbaDebug.address);
+  const GBAPasses = await hre.ethers.getContractFactory("GBAPasses");
+  const gbaPasses = await GBAPasses.deploy();
+  console.log("GBADebug deployed to:", gbaPasses.address);
 
 }
 

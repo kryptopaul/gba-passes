@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 error AlreadyMinted();
 
-contract GBADebug is ERC721, ERC721URIStorage, Ownable {
+contract GBAPasses is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -16,7 +16,7 @@ contract GBADebug is ERC721, ERC721URIStorage, Ownable {
     uint256 public totalMinted;
     mapping (bytes32 => bool) public minted;
 
-    constructor() ERC721("GBADebug", "GBA") {}
+    constructor() ERC721("GBA Passes", "GBA") {}
 
     function safeMint(address to, string calldata uri, bytes32 _studentEmailHash) public onlyOwner {
 

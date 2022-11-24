@@ -63,9 +63,8 @@ const newMetadataFile = async(data) => {
   const obj = {
     "description": "A membership pass for Greenwich Blockchain Association. The pass allows you to access our events and to participate in voting.", 
     "external_url": "https://greblockchain.co.uk", 
-    "image": `/ipfs/${nftImageHashes[parsedJSON.design]}`,
-    // "animation_url": `/ipfs/${nftImageHashes.object_3d}`,
-    "name": "GBA Pass Beta-testing",
+    "image": `ipfs://${nftImageHashes[parsedJSON.design]}`,
+    "name": "GBA Pass",
     "attributes": [
       {
         "trait_type": "Color",
@@ -82,7 +81,6 @@ const newMetadataFile = async(data) => {
   return cid;
 }
 
-// Polygon Mumbai Testnet 
 
 
 const submitTransaction = async(data) => {
@@ -90,14 +88,14 @@ const submitTransaction = async(data) => {
   const provider = new ethers.providers.JsonRpcProvider(process.env.MUMBAI_ENDPOINT);
   const signer = new ethers.Wallet(process.env.MASTER_PRIV_KEY, provider);
   const contract = new ethers.Contract(
-    process.env.CONTRACT_ADDRESS,
+    "0x878a44e95Dd03485c70347A871be8C0eeCD0e525",
     [
       "function safeMint(address to, string calldata uri, bytes32 _studentEmailHash) public ",
     ],
     signer
   );
   
-  const tx = await contract.safeMint(data.address, data.uri, data.hashedEmail);
+  const tx = await contract.safeMint(data.address, data.uri, data.hashedEmail, {gasPrice: ethers.utils.parseUnits("50", "gwei").toString(), gasLimit: 250000});
   log(chalk.green('[SUCCESS] Transaction submitted: ' + chalk.cyan(tx.hash)));
   return tx;
 }
@@ -140,7 +138,7 @@ wss.on('connection', function connection(ws) {
 
       const transactionPayload = {
         address: preparedDataJSON.address,
-        uri: `/ipfs/${metadataCID}`,
+        uri: `ipfs://${metadataCID}`,
         hashedEmail: preparedDataJSON.email,
       }
 
@@ -173,7 +171,7 @@ wss.on('connection', function connection(ws) {
         "embeds": [
           {
             "title": "New mint!",
-            "description": `Someone just claimed a pass!\n\nTransaction link: https://mumbai.polygonscan.com/tx/${transaction.hash}`,
+            "description": `Someone just claimed a pass!\n\nTransaction link: https://polygonscan.com/tx/${transaction.hash}`,
             "color": 894228,
             "thumbnail": {
               "url": `https://cloudflare-ipfs.com/ipfs/${nftImageHashes[preparedDataJSON.design]}`
